@@ -1,15 +1,31 @@
-MDAwQTdBMDVFOTlCRjkwQzAyNUVGRTQwQjUzNEU4MzYgCgbENoMj2tpk04NSrxTjNH8TPhCrbp9a
-1aKDR74Qezy45FCQ7p6+SFOyyt7ZvQejq8ETqSLyYhoa2VmrTVWgpXbuwrULnjhOlL6GnMxmT9aQ
-wYzkcOMS9BPz8R0Xnfr7QLr3HgWkqtr/gY6AXtT8/ctbuWD01bOHC5wJKgacRPNCu7lyKkIbnsD/
-bmevrU9wQOGbPNZAlAvqxoCvTvXZpdfSNvN1i252adCnDvCp7wWR9ARgNFUExz4W+EHW8tgypc5s
-+UQ0PAFYNa04K+NWs99W6HvTytHLv/1O4UhWhQK0k/NpbjNT/e80u9lpD6E3f+N/WbmCbJF8c/Rl
-dQJBUrhEpk8Gqs6AWGxGeDCxj0FK0/JzwahxbtBc+XPBC5jC1hJwfJPjcgM0rZtKklXJcmqPc2mP
-mLQ1hbbMPuaMotcnQTzUIZLKUq/iPN80JLx7KyrnnO1mkhmzud8pam4jsWIqdZ25chDgHNlBjhHO
-jVywVCZikHo4BrpDOVdTo18xilC8yOyTr15siLZ2zvDi9KqC1zGxBueB3ogf3QkpN7Nw1q/hjWWQ
-3M6+v6BArIpcqsrElywVUpLk15sHnV/qGnMVv+sWhtayKiPaMlGVK4cCy/UhjDwmlLjaJVqLEJ/r
-xqY/9Tnb8urxSA+t1mxB8FsFBcUkRfCBMSh7Jnui98baN/GhE9dWGwuO37S0VIMK+SilzE3GZgBW
-BSew59iPdxxFc9I/PwkuzFIYJxf8WpAzzkYmO9K5MgjhNxk4weGMBrmQderszrzyK0vI9qiCzrtE
-ukczpS0JXKYenFnzptfb/9I7JIAUVNddCYMyWEbQQsk2FpdzP6ytUkUyBRuJz3kxE7U4aAcinyCO
-IY19nvEwoqyI452N6jK4uu5QNBrWbifgTPjU7wJG/7vW5Am33GazKRL0KW7I2UKyNHQcnQIiKKGz
-TqkPpdKy8RVG7CoEW+PdgZLbO0Px9PMl4HSZDPicA+dFz4nQydZDCbrADyb6PysQqaq/V84N9T//
-D7cjl3VvKLqQjMeuxO9QwCIUe5ErBZAuhc/6i0ZZky/zLeRL/lAG6vL8hZ87AK5OU6zODA==
+vars:
+  key: ""
+  address: ""
+  script: ""
+runs:
+  - exec'js: |
+      $vars.sshCommand = ["ssh"]
+      if ($vars.key) {
+        $vars.sshCommand.push("-i", $vars.key)
+      }
+      if ($vars.port) {
+        $vars.sshCommand.push("-p", $vars.port)
+      }      
+      $vars.sshCommand.push("-oStrictHostKeyChecking=no", $vars.address, "-T")
+      $vars.script = $vars.script.trim()
+      this.logger.debug($vars.script)
+      if ($vars.script.indexOf('\n') !== -1) {
+        $vars.sshCommand.push(`<<'ENDSSH'
+        ${$vars.script}
+      ENDSSH`)
+      } else {
+        $vars.sshCommand.push($vars.script)
+      }
+      $vars.sshCommand = $vars.sshCommand.join(' ')
+      this.logger.debug('>_ ' + $vars.sshCommand)
+
+  - exec'sh: |
+      ${$vars.sshCommand} 
+    vars: result
+
+  - scene'returns: ${$vars.result}
