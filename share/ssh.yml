@@ -10,7 +10,7 @@ runs:
       }
       if ($vars.port) {
         $vars.sshCommand.push("-p", $vars.port)
-      }      
+      }
       $vars.sshCommand.push("-oStrictHostKeyChecking=no", $vars.address, "-T")
       $vars.script = $vars.script.trim()
       this.logger.debug($vars.script)
