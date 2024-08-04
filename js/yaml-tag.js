@@ -1,5 +1,7 @@
 // origin: https://github.com/jeanfredrik/yaml-tag
 //
+import {yaml } from "https://raw.githubusercontent.com/nodeca/js-yaml/master/dist/js-yaml.mjs"
+
 function createReplacementNodeType(replacements) {
   return new yaml.Type('!templateLiteralExpressionReplacement', {
     // Loader must parse sequence nodes only for this type (i.e. arrays in JS terminology).
