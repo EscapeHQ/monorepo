@@ -1,6 +1,6 @@
 // origin: https://github.com/jeanfredrik/yaml-tag
 //
-import {yaml } from "https://raw.githubusercontent.com/nodeca/js-yaml/master/dist/js-yaml.mjs"
+import { yaml } from "https://cdn.jsdelivr.net/gh/nodeca/js-yaml@master/dist/js-yaml.mjs"
 
 function createReplacementNodeType(replacements) {
   return new yaml.Type('!templateLiteralExpressionReplacement', {
