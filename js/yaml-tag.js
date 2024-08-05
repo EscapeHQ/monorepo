@@ -41,3 +41,5 @@ function parse(strings, ...replacements) {
   }
   return yaml.load(strings.raw.join(''));
 }
+
+export { parse, createReplacementNodeType };
