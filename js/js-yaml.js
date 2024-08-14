@@ -1,5 +1,5 @@
 // origin: https://cdn.jsdelivr.net/gh/nodeca/js-yaml@master/dist/js-yaml.mjs
-// <script type="module" src="https://cdn.jsdelivr.net/gh/nodeca/js-yaml@master/dist/js-yaml.mjs"></script>
+// <script type="module" src="https://cdn.jsdelivr.net/gh/EscapeHQ/monorepo@master/js/js-yaml.js"></script>
 
 /*! js-yaml 4.1.0 https://github.com/nodeca/js-yaml @license MIT */
 function isNothing(subject) {
